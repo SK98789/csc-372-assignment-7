@@ -1,0 +1,34 @@
+body {
+      background-color: rgb(233, 200, 216);
+    }
+button {
+    font-size: 20px;
+    font-family: 'Comic Sans MS', cursive;
+    background-color: rgb(219, 134, 178);
+    border-radius: 20px;
+    padding: 10px;
+    border-color: rgb(182, 67, 127);
+    border-style: solid;
+}
+button:hover {
+    background-color: rgb(189, 100, 146);
+    border-color: rgb(107, 31, 70);
+}
+
+h1 {
+    font-size: 32pt;
+    font-family: 'Comic Sans MS', cursive;
+    text-shadow: 0 5px #fff;
+}
+header {
+    min-height: 100px;
+    background-color: rgb(255, 54, 164);
+    display: flex;
+    justify-content: center;
+}
+
+#input-banner{
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+}
