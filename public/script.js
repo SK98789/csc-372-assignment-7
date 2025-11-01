@@ -23,6 +23,9 @@
             .then(checkStatus)
             .then((response) => {
                 contentDiv.replaceChildren();
+                const header = document.createElement('h2');
+                header.appendChild(document.createTextNode("Categories"));
+                contentDiv.appendChild(header);
                 for (const item of response) {
                     let cat = document.createElement("button");
                     cat.appendChild(document.createTextNode(item.category));
@@ -66,8 +69,15 @@
         let submitButton = document.createElement("input");
         submitButton.setAttribute("type", "submit");
         submitButton.setAttribute("value", "Submit");
-        submitButton.addEventListener('click', () => {
-            createJoke(form);
+        submitButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if(form.checkValidity()){
+                createJoke(form);
+            }
+            else{
+                alert("All values must be filled to post joke");
+            }
+            
         });
         form.appendChild(submitButton);
 
@@ -88,7 +98,24 @@
             body: jsonBody
         }).then(checkStatus)
             .then((response) => {
-                console.log(response);
+                contentDiv.replaceChildren();
+                if (response.length === 0) {
+                    let warning = document.createElement("p");
+                    warning.appendChild(document.createTextNode("No Jokes found for this category"));
+                    contentDiv.appendChild(warning);
+                }
+                else {
+                    for (const joke of response) {
+                        let para1 = document.createElement("p");
+                        para1.appendChild(document.createTextNode(joke.setup));
+                        let para2 = document.createElement("p");
+                        para2.appendChild(document.createTextNode(joke.delivery));
+                        contentDiv.appendChild(para1);
+                        contentDiv.appendChild(para2);
+                        contentDiv.appendChild(document.createElement("hr"));
+
+                    }
+                }
             }
             )
 
@@ -108,7 +135,9 @@
     function createInputElement(id, form) {
         let categoryInput = document.createElement("input");
         categoryInput.setAttribute("type", "text");
+        categoryInput.setAttribute("name", id);
         categoryInput.setAttribute("id", id);
+        categoryInput.required = true;
         form.appendChild(categoryInput);
     }
 

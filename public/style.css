@@ -27,6 +27,11 @@ header {
     justify-content: center;
 }
 
+#container{
+    gap:10px;
+    
+}
+
 #input-banner{
     padding: 10px;
     display: flex;

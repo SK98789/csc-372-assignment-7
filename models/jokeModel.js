@@ -27,7 +27,7 @@ async function addJoke(category, setup, delivery) {
     let queryText = "INSERT INTO jokes ( category, setup, delivery) VALUES ($1, $2, $3) RETURNING *";
     let values = [category, setup, delivery];
     const result = await pool.query(queryText, values);
-    return result.rows[0];
+    return getByCategory(category);
 }
 module.exports = {
     getCategories,
