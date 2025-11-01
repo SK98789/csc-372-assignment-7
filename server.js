@@ -1,4 +1,11 @@
-//server.js
+/*
+  Name: Sadie Korzekwa
+  Date: 11.01.2025
+  CSC 372-01
+
+  This is the server that hosts the API endpoints.
+
+*/
 "use strict";
 const express = require("express");
 const app = express();

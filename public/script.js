@@ -1,7 +1,13 @@
 "use strict";
+/*
+  Name: Sadie Korzekwa
+  Date: 11.01.2025
+  CSC 372-01
 
+  This is the script for the index for Assignment 7. It displays random jokes saved in a postgres server on load. 
+  You can view/search for the joke categories and view the jokes in those categories. You can also add jokes to the database.
 
-//const { response } = require("express");
+*/
 
 (function () {
     const MY_SERVER_BASEURL = "/jokebook";
@@ -10,6 +16,9 @@
     const addButton = id("add");
     window.addEventListener("load", init);
     let contentDiv = id("container");
+    /**
+     * The initial function that runs on page load
+     */
     function init() {
         homeButton.addEventListener('click', goHome);
         viewButton.addEventListener('click', listCategories);
@@ -18,6 +27,10 @@
 
     }
 
+    /**
+     * this function fetches the current categories, creates buttons out of them, and adds a search bar to search 
+     * for a specific category
+     */
     function listCategories() {
         fetch(MY_SERVER_BASEURL + "/categories")
             .then(checkStatus)
@@ -42,6 +55,10 @@
             });
     }
 
+    /**
+     * Creates the actual search bar for searching categories
+     * @param {*} parent : the parent is an element that should hold the search bar and search button
+     */
     function createSearchBar(parent) {
         let search = document.createElement("input");
         search.setAttribute("type", "search");
@@ -58,6 +75,9 @@
 
     }
 
+    /**
+     * Creates the form for the add joke input and provides form validation
+     */
     function addJokeForm() {
         let form = document.createElement("form");
         createInputLabel("Category: ", "category", form);
@@ -86,6 +106,10 @@
         contentDiv.replaceChildren(form);
     }
 
+    /**
+     * Makes the actual call to the POST endpoint to create the joke in the database
+     * @param {*} form : this is the form that holds the joke input
+     */
     function createJoke(form) {
         let params = new FormData(form);
         let jsonBody = JSON.stringify(Object.fromEntries(params));
@@ -125,6 +149,12 @@
 
     }
 
+    /**
+     * Creates a label for an input field
+     * @param {*} value : the actual text to display in the label
+     * @param {*} id : the ID of the input that the label should be linked with
+     * @param {*} form : the form that the label should be the child of
+     */
     function createInputLabel(value, id, form) {
         let label = document.createElement('label');
         label.setAttribute("for", id);
@@ -132,6 +162,11 @@
         form.appendChild(label);
     }
 
+    /**
+     * Creates an input field
+     * @param {*} id : the ID of the input field
+     * @param {*} form : the form that the input field should be a child of
+     */
     function createInputElement(id, form) {
         let categoryInput = document.createElement("input");
         categoryInput.setAttribute("type", "text");
@@ -143,6 +178,11 @@
 
 
 
+    /**
+     * Makes the call to the endpoint to fetch all jokes in the specified category.
+     * If the returned list is empty, it provides a 'No jokes found' message.
+     * @param {*} category : the category to search
+     */
     function displayJokesInCategory(category) {
         contentDiv.replaceChildren();
         fetch(MY_SERVER_BASEURL + "/category/" + category)
@@ -173,6 +213,9 @@
             });
     }
 
+    /**
+     * Fetches a random joke from the random endpoint and displays this joke on the home screen
+     */
     function goHome() {
         fetch(MY_SERVER_BASEURL + "/random")
             .then(checkStatus)
@@ -187,11 +230,20 @@
                 console.error("Error: ", error);
             });
     }
-
+    /**
+     * Just fetches the element with the specified ID
+     * @param {*} idName : the ID of the element
+     * @returns the element with the ID of idName
+     */
     function id(idName) {
         return document.getElementById(idName);
     }
 
+    /**
+     * Checks the status of an API call
+     * @param {*} response : the response from the API call
+     * @returns the JSON of the response if the response is ok. Otherwise, it throws an error.
+     */
     function checkStatus(response) {
         if (!response.ok) {
             throw Error("Error in request: " + response.statusText);

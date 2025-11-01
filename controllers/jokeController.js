@@ -1,3 +1,12 @@
+/*
+  Name: Sadie Korzekwa
+  Date: 11.01.2025
+  CSC 372-01
+
+    This is the Joke Controller file. The methods in this file are called by the routes. They make calls to the model,
+    and they catch errors to send back with different statuses.
+*/
+
 "use strict";
 const model = require('../models/jokeModel');
 async function fetchCategories(req, res) {
